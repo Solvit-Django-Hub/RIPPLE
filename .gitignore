@@ -12,6 +12,10 @@ __pycache__/
 *.sqlite3
 db.sqlite3
 
+#migrations
+*/migrations/*.py
+!*/migrations/__init__.py
+
 # Media and local uploads
 media/
 
