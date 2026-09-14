@@ -1,13 +1,20 @@
 from pathlib import Path
 from datetime import timedelta
+import environ
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = 'django-insecure-change-this-in-production'
+env = environ.Env(
+    DEBUG=(bool, False)
+)
 
-DEBUG = True
+environ.Env.read_env(BASE_DIR / '.env')
 
-ALLOWED_HOSTS = ['*']
+SECRET_KEY = env('SECRET_KEY')
+
+DEBUG = env('DEBUG')
+
+ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=['*'])
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -19,6 +26,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_simplejwt',
     'accounts',
+    'projects',
 ]
 
 MIDDLEWARE = [
