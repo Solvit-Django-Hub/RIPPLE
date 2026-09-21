@@ -27,6 +27,8 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'accounts',
     'projects',
+    'signals',
+    'traces',
 ]
 
 MIDDLEWARE = [
