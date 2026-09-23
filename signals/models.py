@@ -1,4 +1,4 @@
-"""Signal models for tracking metric changes in RIPPLE."""
+
 from django.db import models
 from projects.models import Project
 

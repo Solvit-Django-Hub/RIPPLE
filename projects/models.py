@@ -1,4 +1,4 @@
-"""Project models for RIPPLE platform."""
+
 from django.db import models
 from django.conf import settings
 

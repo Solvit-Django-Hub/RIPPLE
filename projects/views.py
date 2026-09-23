@@ -1,4 +1,4 @@
-"""Views for managing RIPPLE projects."""
+
 from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated
 from .models import Project

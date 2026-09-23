@@ -4,7 +4,7 @@ from signals.models import Signal
 
 
 class Trace(models.Model):
-    """Represents a contributing factor associated with a detected signal."""
+
 
     signal = models.ForeignKey(
         Signal,
