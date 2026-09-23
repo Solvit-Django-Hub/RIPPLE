@@ -31,6 +31,8 @@ INSTALLED_APPS = [
     'traces',
     'scenarios',
     'predictions',
+    'recommendations',
+    'decisions',
 ]
 
 MIDDLEWARE = [
