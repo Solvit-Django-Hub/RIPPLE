@@ -29,6 +29,8 @@ INSTALLED_APPS = [
     'projects',
     'signals',
     'traces',
+    'scenarios',
+    'predictions',
 ]
 
 MIDDLEWARE = [
