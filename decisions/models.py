@@ -4,12 +4,13 @@ from recommendations.models import Recommendation
 
 
 class Decision(models.Model):
+   
 
     STATUS_CHOICES = [
-        ('approved', 'Approved'),
-        ('rejected', 'Rejected'),
-        ('deferred', 'Deferred'),
-        ('implemented', 'Implemented'),
+        ('APPROVED', 'Approved'),
+        ('REJECTED', 'Rejected'),
+        ('DEFERRED', 'Deferred'),
+        ('IMPLEMENTED', 'Implemented'),
     ]
 
     recommendation = models.ForeignKey(
@@ -22,7 +23,7 @@ class Decision(models.Model):
         on_delete=models.CASCADE,
         related_name='decisions'
     )
-    decision = models.CharField(max_length=30, choices=STATUS_CHOICES, default='approved')
+    decision = models.CharField(max_length=30, choices=STATUS_CHOICES, default='APPROVED')
     notes = models.TextField(blank=True, default='')
     decided_at = models.DateTimeField(auto_now_add=True)
 
@@ -32,11 +33,11 @@ class Decision(models.Model):
         ordering = ['-decided_at']
 
     def __str__(self):
-        return f"Decision on Recommendation #{self.recommendation_id} by {self.decided_by.username}: {self.decision}"
+        return f"Decision: {self.decision} on '{self.recommendation.title}' by {self.decided_by.username}"
 
 
 class Outcome(models.Model):
-
+   
 
     decision = models.OneToOneField(
         Decision,
