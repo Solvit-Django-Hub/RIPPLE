@@ -9,4 +9,6 @@ urlpatterns = [
     path('api/traces/', include('traces.urls')),
     path('api/scenarios/', include('scenarios.urls')),
     path('api/predictions/', include('predictions.urls')),
+    path('api/recommendations/', include('recommendations.urls')),
+    path('api/decisions/', include('decisions.urls')),
 ]
