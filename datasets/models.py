@@ -17,6 +17,7 @@ class Dataset(models.Model):
     file = models.FileField(upload_to='datasets/')
     rows = models.IntegerField(default=0)
     columns = models.IntegerField(default=0)
+    summary_stats = models.JSONField(default=dict, blank=True)
     uploaded_by = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
@@ -30,7 +31,6 @@ class Dataset(models.Model):
         ordering = ['-created_at']
 
     def save(self, *args, **kwargs):
-
         if self.file and (self.rows == 0 or self.columns == 0):
             try:
                 self.file.seek(0)

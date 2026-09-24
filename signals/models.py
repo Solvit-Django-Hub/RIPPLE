@@ -1,22 +1,22 @@
-
 from django.db import models
 from projects.models import Project
+from datasets.models import Dataset
 
 
 class Signal(models.Model):
-   
+
 
     SEVERITY_CHOICES = [
-        ('low', 'Low'),
-        ('medium', 'Medium'),
-        ('high', 'High'),
-        ('critical', 'Critical'),
+        ('LOW', 'Low'),
+        ('MEDIUM', 'Medium'),
+        ('HIGH', 'High'),
+        ('CRITICAL', 'Critical'),
     ]
 
     STATUS_CHOICES = [
-        ('active', 'Active'),
-        ('resolved', 'Resolved'),
-        ('ignored', 'Ignored'),
+        ('ACTIVE', 'Active'),
+        ('RESOLVED', 'Resolved'),
+        ('IGNORED', 'Ignored'),
     ]
 
     project = models.ForeignKey(
@@ -24,12 +24,19 @@ class Signal(models.Model):
         on_delete=models.CASCADE,
         related_name='signals'
     )
+    dataset = models.ForeignKey(
+        Dataset,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name='signals'
+    )
     metric = models.CharField(max_length=120)
     previous_value = models.FloatField()
     current_value = models.FloatField()
     change_percentage = models.FloatField(blank=True, null=True)
-    severity = models.CharField(max_length=20, choices=SEVERITY_CHOICES, default='low')
-    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='active')
+    severity = models.CharField(max_length=20, choices=SEVERITY_CHOICES, default='LOW')
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='ACTIVE')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -45,17 +52,17 @@ class Signal(models.Model):
         else:
             self.change_percentage = 0.0
 
-        # Auto-compute severity if default 'low'
-        if self.severity == 'low' and self.change_percentage is not None:
+        
+        if self.severity == 'LOW' and self.change_percentage is not None:
             abs_change = abs(self.change_percentage)
             if abs_change >= 25:
-                self.severity = 'critical'
+                self.severity = 'CRITICAL'
             elif abs_change >= 15:
-                self.severity = 'high'
+                self.severity = 'HIGH'
             elif abs_change >= 8:
-                self.severity = 'medium'
+                self.severity = 'MEDIUM'
 
         super().save(*args, **kwargs)
 
     def __str__(self):
-        return f"{self.metric}: {self.previous_value} -> {self.current_value} ({self.severity.upper()})"
+        return f"{self.metric}: {self.previous_value} -> {self.current_value} ({self.severity})"
